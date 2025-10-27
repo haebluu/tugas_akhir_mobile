@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; // <-- DIPERBAIKI: Impor paket Provider
+import 'package:provider/provider.dart';
 import 'package:tugas_akhir/providers/hydration_provider.dart';
+import 'dart:math';
 import '../utils/colors.dart';
 
 // Halaman Riwayat Asupan Air
@@ -9,8 +10,10 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Memastikan paket provider diimpor untuk menggunakan context.watch
     final provider = context.watch<HydrationProvider>();
     final theme = Theme.of(context);
+    final Random random = Random();
 
     // Filter log 7 hari terakhir (Simulasi)
     final sevenDaysAgo = DateTime.now().subtract(const Duration(days: 7));
@@ -19,13 +22,18 @@ class HistoryScreen extends StatelessWidget {
         .toList();
 
     // Data untuk Chart (Simulasi)
-    // Di aplikasi nyata, ini akan dihitung per hari
+    // Di aplikasi nyata, ini akan dihitung per hari dengan nilai yang bervariasi
     final dailyData = <String, int>{};
     for (int i = 6; i >= 0; i--) {
       final date = DateTime.now().subtract(Duration(days: i));
       final dateKey = '${date.day}/${date.month}';
-      // Mock data
-      dailyData[dateKey] = 2000 - i * 100 + (date.day % 3) * 500; 
+      
+      // LOGIKA BARU: Menghasilkan data yang lebih naik turun (random)
+      // Base (2000ml) + Random (-500ml sampai +500ml)
+      int mockIntake = 2000 + random.nextInt(1001) - 500;
+      
+      // Memastikan nilai tidak negatif dan masuk akal
+      dailyData[dateKey] = mockIntake.clamp(500, 3500); 
     }
     
     return Scaffold(
@@ -43,22 +51,38 @@ class HistoryScreen extends StatelessWidget {
                   children: [
                     Text('Total Asupan 7 Hari Terakhir', style: theme.textTheme.titleLarge),
                     const SizedBox(height: 12),
-                    // Simulasi Chart (Di sini harusnya pakai fl_chart)
+                    // Simulasi Chart (Di sini harusnya pakai fl_chart/syncfusion_flutter_charts)
                     Container(
                       height: 200,
                       decoration: BoxDecoration(
-                        color: primaryColor.withValues(),
+                        color: primaryColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: primaryColor, width: 2)
                       ),
                       child: Center(
-                        child: Text(
-                          'Simulasi Grafik 7 Hari\n(Di sini akan tampil fl_chart)',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Simulasi Grafik 7 Hari',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+                            ),
+                            // Menampilkan data simulasi sebagai bukti bahwa datanya variatif
+                            Text(
+                              'Data: ${dailyData.values.join(', ')} ml', 
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.bodySmall,
+                            ),
+                          ],
                         ),
                       ),
                     ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Tujuan: Menampilkan visualisasi data asupan air harian.',
+                      style: theme.textTheme.bodySmall,
+                    )
                   ],
                 ),
               ),
