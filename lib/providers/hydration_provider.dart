@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:tugas_akhir/models/user.model.dart';
+import '../models/user_model.dart'; // Perbaikan jalur impor
 import '../models/drink_log_model.dart';
 import '../services/api_service.dart';
 import '../services/notification_service.dart';
@@ -25,7 +25,7 @@ class HydrationProvider with ChangeNotifier {
   int _reminderIntervalHours = 2; // Setiap 2 jam
   String _weatherCondition = 'Memuat...';
   
-  // Getters
+  // Getters untuk mengakses state
   bool get isAuthenticated => _authService.isLoggedIn;
   UserModel? get currentUser => _currentUser;
   int get dailyTargetMl => _currentUser?.dailyTargetMl ?? 2000;
@@ -84,11 +84,11 @@ class HydrationProvider with ChangeNotifier {
     if (amountMl > 0) {
       _currentIntakeMl += amountMl;
       _drinkHistory.add(DrinkLog(amountMl, DateTime.now()));
-      print('Log: Ditambahkan $amountMl ml. Total: $_currentIntakeMl ml');
+      // print('Log: Ditambahkan $amountMl ml. Total: $_currentIntakeMl ml'); // Dihapus karena avoid_print
       notifyListeners();
       
       if (_currentIntakeMl >= dailyTargetMl) {
-        print('MOTIVASI: Target Harian Tercapai!');
+        // print('MOTIVASI: Target Harian Tercapai!'); // Dihapus karena avoid_print
       }
     }
   }
@@ -97,7 +97,7 @@ class HydrationProvider with ChangeNotifier {
   void setDailyTarget(int newTarget) {
     if (newTarget > 500 && _currentUser != null) {
       _currentUser!.dailyTargetMl = newTarget;
-      print('Target baru diatur: $newTarget ml');
+      // print('Target baru diatur: $newTarget ml'); // Dihapus karena avoid_print
       notifyListeners();
     }
   }
@@ -139,10 +139,9 @@ class HydrationProvider with ChangeNotifier {
 
       if (isWeatherHot && _currentUser != null) {
         // Logika: Jika cuaca panas, target naik 500ml
-        // Set target hanya jika belum diubah (simulasi)
         if (_currentUser!.dailyTargetMl == 2000) { 
            _currentUser!.dailyTargetMl = 2500; 
-           print('PENYESUAIAN TARGET: Cuaca panas, target naik menjadi ${_currentUser!.dailyTargetMl} ml.');
+           // print('PENYESUAIAN TARGET: Cuaca panas, target naik menjadi ${_currentUser!.dailyTargetMl} ml.'); // Dihapus karena avoid_print
         }
       } else if (_currentUser != null) {
          if (_currentUser!.dailyTargetMl == 2500) {
@@ -151,7 +150,7 @@ class HydrationProvider with ChangeNotifier {
       }
     } catch (e) {
       _weatherCondition = 'Gagal memuat cuaca';
-      print('Error simulasi cuaca: $e');
+      // print('Error simulasi cuaca: $e'); // Dihapus karena avoid_print
     }
     notifyListeners();
   }

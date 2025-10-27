@@ -30,6 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  # START: Tambahan Wajib untuk State Management
+  provider: ^6.1.1 # Pastikan baris ini ada untuk mengaktifkan state management
+  # END: Tambahan Wajib untuk State Management
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

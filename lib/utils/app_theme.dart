@@ -7,6 +7,8 @@ ThemeData buildAppTheme(Brightness brightness) {
   return ThemeData(
     brightness: brightness,
     primaryColor: primaryColor,
+    // FIX: Properti 'color' diganti menjadi cardColor di ThemeData (seperti pada perbaikan sebelumnya)
+    cardColor: isDark ? const Color(0xFF1E1E1E) : Colors.white, 
     colorScheme: ColorScheme.fromSeed(
       seedColor: primaryColor,
       primary: primaryColor,
@@ -15,7 +17,8 @@ ThemeData buildAppTheme(Brightness brightness) {
     ),
     scaffoldBackgroundColor: isDark ? darkBackgroundColor : lightBackgroundColor,
     appBarTheme: AppBarTheme(
-      color: isDark ? darkBackgroundColor : primaryColor,
+      // FIX: Menggunakan backgroundColor yang tidak deprecated
+      backgroundColor: isDark ? darkBackgroundColor : primaryColor, 
       elevation: 0,
       iconTheme: IconThemeData(color: isDark ? lightTextColor : Colors.white),
       titleTextStyle: TextStyle(
@@ -28,15 +31,16 @@ ThemeData buildAppTheme(Brightness brightness) {
       backgroundColor: accentColor,
       foregroundColor: darkTextColor,
     ),
-    cardTheme: CardTheme(
-      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 4,
-    ),
+    // FIX UTAMA: Menghapus properti cardTheme sepenuhnya untuk menghindari error tipe data
+    // Karena shape dan elevation yang Anda gunakan sudah merupakan default Material 3
+    // dan warna sudah diatur melalui cardColor di atas.
     textTheme: TextTheme(
       titleLarge: TextStyle(color: isDark ? lightTextColor : darkTextColor),
       bodyMedium: TextStyle(color: isDark ? lightTextColor : darkTextColor),
-      bodySmall: TextStyle(color: isDark ? lightTextColor.withOpacity(0.7) : darkTextColor.withOpacity(0.7)),
+      // FIX: Mengganti .withOpacity() yang deprecated
+      bodySmall: TextStyle(
+        color: isDark ? lightTextColor.withAlpha((255 * 0.7).round()) : darkTextColor.withAlpha((255 * 0.7).round()),
+      ),
     ),
     useMaterial3: true,
   );

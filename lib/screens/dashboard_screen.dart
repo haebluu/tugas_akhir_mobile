@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tugas_akhir/providers/provider.dart';
+import 'package:tugas_akhir/providers/hydration_provider.dart';
 import '../widgets/water_progress_bar.dart';
 import '../widgets/add_water_button.dart';
 import '../utils/colors.dart';

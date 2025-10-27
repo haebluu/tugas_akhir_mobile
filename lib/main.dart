@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tugas_akhir/providers/provider.dart';
+import 'package:provider/provider.dart'; // <-- DIPERBAIKI: Impor paket Provider
+import 'providers/hydration_provider.dart'; // <-- DIPERBAIKI: Impor kelas provider
 import 'screens/dashboard_screen.dart';
 import 'screens/history_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/login_screen.dart';
 import 'utils/app_theme.dart';
-import 'utils/colors.dart';
+import 'utils/colors.dart'; // <-- Dipastikan mengimpor konstanta warna
 
 void main() {
   // Simulasi inisialisasi Firebase/API
   print('SIMULASI: Inisialisasi Firebase & Notifikasi...');
   runApp(
+    // Error di sini teratasi setelah impor Provider
     ChangeNotifierProvider(
       create: (context) => HydrationProvider(),
       child: const HydraMateApp(),
@@ -24,7 +25,7 @@ class HydraMateApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Mendengarkan perubahan mode gelap dan status autentikasi
+    // Error di sini teratasi setelah impor Provider
     final provider = context.watch<HydrationProvider>();
     final isDark = provider.isDarkMode;
     final isAuthenticated = provider.isAuthenticated;
@@ -75,7 +76,7 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).cardColor,
         selectedItemColor: primaryColor,
-        unselectedItemColor: iconColor.withOpacity(0.6),
+        unselectedItemColor: iconColor.withValues(),
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[

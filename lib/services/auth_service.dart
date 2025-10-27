@@ -2,7 +2,8 @@
 class AuthService {
   // Status login simulasi
   bool _isLoggedIn = false;
-  String? _currentUserId = 'user_hydramate_123';
+  // FIX: Menggunakan final untuk _currentUserId
+  final String? _currentUserId = 'user_hydramate_123'; 
   
   bool get isLoggedIn => _isLoggedIn;
   String? get currentUserId => _currentUserId;
@@ -12,7 +13,7 @@ class AuthService {
     // Logika simulasi: sukses jika email dan password tidak kosong
     if (email.isNotEmpty && password.isNotEmpty) {
       _isLoggedIn = true;
-      print('SIMULASI AUTH: Berhasil login sebagai $email');
+      // print('SIMULASI AUTH: Berhasil login sebagai $email'); // FIX: Menghapus print
       return true;
     }
     return false;
@@ -21,6 +22,6 @@ class AuthService {
   Future<void> signOut() async {
     await Future.delayed(const Duration(milliseconds: 500));
     _isLoggedIn = false;
-    print('SIMULASI AUTH: Pengguna berhasil Logout.');
+    // print('SIMULASI AUTH: Pengguna berhasil Logout.'); // FIX: Menghapus print
   }
 }

@@ -34,7 +34,8 @@ class WaterProgressIndicator extends StatelessWidget {
                   child: CircularProgressIndicator(
                     value: progress,
                     strokeWidth: 12,
-                    backgroundColor: accentColor.withOpacity(0.3),
+                    // FIX: Mengganti .withOpacity() yang deprecated
+                    backgroundColor: accentColor.withAlpha((255 * 0.3).round()), 
                     valueColor: AlwaysStoppedAnimation<Color>(isTargetMet ? Colors.green : primaryColor),
                   ),
                 ),

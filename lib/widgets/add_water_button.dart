@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tugas_akhir/providers/provider.dart';
+import 'package:tugas_akhir/providers/hydration_provider.dart';
 import '../utils/colors.dart';
 
 // Widget Tombol Tambah Air Cepat

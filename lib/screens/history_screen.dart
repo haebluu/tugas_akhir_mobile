@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_akhir/providers/provider.dart';
+import 'package:provider/provider.dart'; // <-- DIPERBAIKI: Impor paket Provider
+import 'package:tugas_akhir/providers/hydration_provider.dart';
 import '../utils/colors.dart';
 
 // Halaman Riwayat Asupan Air
@@ -46,7 +47,7 @@ class HistoryScreen extends StatelessWidget {
                     Container(
                       height: 200,
                       decoration: BoxDecoration(
-                        color: primaryColor.withOpacity(0.1),
+                        color: primaryColor.withValues(),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: primaryColor, width: 2)
                       ),
